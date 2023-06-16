@@ -1,7 +1,7 @@
 #include<unistd.h>
 /**
  * Description: main - Entry point
- * Returns: Always 1.
+ * Return: Always 1
 */
 int main(void)
 {
