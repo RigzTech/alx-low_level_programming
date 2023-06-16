@@ -19,5 +19,5 @@ int main(void)
 	{
 		printf("The number is %d\n", n);
 	}
-	return (0)
+	return (0);
 }
