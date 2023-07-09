@@ -1,20 +1,18 @@
 #include "main.h"
-
 /**
- * _strlen - calculate string lenght.
- *
- * @s: the string to calculate it's length.
- * Return: length of a string.
+ * _strchr - locates a character in a string,
+ * @s: string.
+ * @c: character.
+ * Return: the pointer to the first occurrence of the character c.
  */
-
-int _strlen(char *s)
+char *_strchr(char *s, char c)
 {
-	int i;
-	int length = 0;
+	unsigned int i = 0;
 
-	for (i = 0; s[i] != '\0'; i++)
-	{
-		length++;
-	}
-	return (length);
+	for (; *(s + i) != '\0'; i++)
+		if (*(s + i) == c)
+			return (s + i);
+	if (*(s + i) == c)
+		return (s + i);
+	return ('\0');
 }
