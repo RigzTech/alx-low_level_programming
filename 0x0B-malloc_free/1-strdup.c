@@ -9,7 +9,7 @@
 char *_strdup(char *str)
 {
 	char *strout;
-	unsigned int x, y;
+	unsigned int a, b;
 
 	if (str == NULL)
 		return (NULL);
@@ -21,7 +21,7 @@ char *_strdup(char *str)
 	if  (strout == NULL)
 		return (NULL);
 
-	for (b = 0; b <= i; b++)
+	for (b = 0; b <= a; b++)
 
 		strout[b] = str[b];
 
