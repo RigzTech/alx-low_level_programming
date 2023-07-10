@@ -40,4 +40,4 @@ int **alloc_grid(int width, int height)
 			gridout[x][y] = 0;
 
 	return (gridout);
-}i
+}
