@@ -13,8 +13,8 @@
  */
 void print_addr(char *ptr)
 {
-	int j;
-	int start;
+	int i;
+	int begin;
 	char sys;
 
 	printf("  Entry point address:               0x");
@@ -22,14 +22,14 @@ void print_addr(char *ptr)
 	sys = ptr[4] + '0';
 	if (sys == '1')
 	{
-		start = 26;
+		begin = 26;
 		printf("80");
-		for (j = start; j >= 22; j--)
+		for (i = begin; i >= 22; i--)
 		{
-			if (ptr[j] > 0)
-				printf("%x", ptr[j]);
-			else if (ptr[j] < 0)
-				printf("%x", 256 + ptr[j]);
+			if (ptr[i] > 0)
+				printf("%x", ptr[i]);
+			else if (ptr[i] < 0)
+				printf("%x", 256 + ptr[i]);
 		}
 		if (ptr[7] == 6)
 			printf("00");
@@ -37,14 +37,14 @@ void print_addr(char *ptr)
 
 	if (sys == '2')
 	{
-		start = 26;
-		for (j = start; j > 23; j--)
+		begin = 26;
+		for (i = begin; i > 23; i--)
 		{
-			if (ptr[j] >= 0)
-				printf("%02x", ptr[j]);
+			if (ptr[i] >= 0)
+				printf("%02x", ptr[i]);
 
-			else if (ptr[j] < 0)
-				printf("%02x", 256 + ptr[j]);
+			else if (ptr[i] < 0)
+				printf("%02x", 256 + ptr[i]);
 
 		}
 																}
@@ -110,11 +110,11 @@ void print_osabi(char *ptr)
  */
 void print_version(char *ptr)
 {
-	int versn = ptr[6];
+	int version = ptr[6];
 
 	printf("  Version:                           %d", version);
 
-	if (versn == EV_CURRENT)
+	if (version == EV_CURRENT)
 		printf(" (current)");
 
 	printf("\n");
@@ -126,13 +126,13 @@ void print_version(char *ptr)
  */
 void print_data(char *ptr)
 {
-	char _data = ptr[5];
+	char data = ptr[5];
 
 	printf("  Data:                              2's complement");
-	if (_data == 1)
+	if (data == 1)
 		printf(", little endian\n");
 
-	if (_data == 2)
+	if (data == 2)
 		printf(", big endian\n");
 }
 /**
@@ -142,12 +142,12 @@ void print_data(char *ptr)
  */
 void print_magic(char *ptr)
 {
-	int _bytes;
+	int bytes;
 
 	printf("  Magic:  ");
 
-	for (_bytes = 0; _bytes < 16; _bytes++)
-		printf(" %02x", ptr[_bytes]);
+	for (bytes = 0; bytes < 16; bytes++)
+		printf(" %02x", ptr[bytes]);
 
 	printf("\n");
 
@@ -160,18 +160,18 @@ void print_magic(char *ptr)
  */
 void check_sys(char *ptr)
 {
-	char systm = ptr[4] + '0';
+	char sys = ptr[4] + '0';
 
-	if (systm == '0')
+	if (sys == '0')
 		exit(98);
 
 	printf("ELF Header:\n");
 	print_magic(ptr);
 
-	if (systm == '1')
+	if (sys == '1')
 		printf("  Class:                             ELF32\n");
 
-	if (systm == '2')
+	if (sys == '2')
 		printf("  Class:                             ELF64\n");
 
 	print_data(ptr);
@@ -189,11 +189,11 @@ void check_sys(char *ptr)
 int check_elf(char *ptr)
 {
 	int addr = (int)ptr[0];
-	char X = ptr[1];
-	char Y = ptr[2];
-	char Z = ptr[3];
+	char E = ptr[1];
+	char L = ptr[2];
+	char F = ptr[3];
 
-	if (addr == 127 && X == 'X' && Y == 'Y' && Z == 'Z')
+	if (addr == 127 && E == 'E' && L == 'L' && F == 'F')
 		return (1);
 
 	return (0);
@@ -207,7 +207,7 @@ int check_elf(char *ptr)
  */
 int main(int argc, char *argv[])
 {
-	int _fd, ret_read;
+	int fd, ret_read;
 	char ptr[27];
 
 	if (argc != 2)
@@ -216,16 +216,16 @@ int main(int argc, char *argv[])
 		exit(98);
 	}
 
-	_fd = open(argv[1], O_RDONLY);
+	fd = open(argv[1], O_RDONLY);
 
-	if (_fd < 0)
+	if (fd < 0)
 	{
 		dprintf(STDERR_FILENO, "Err: file can not be open\n");
 		exit(98);
 	}
 
-	lseek(_fd, 0, SEEK_SET);
-	ret_read = read(_fd, ptr, 27);
+	lseek(fd, 0, SEEK_SET);
+	ret_read = read(fd, ptr, 27);
 
 	if (ret_read == -1)
 	{
@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
 	}
 
 	check_sys(ptr);
-	close(_fd);
+	close(fd);
 
 	return (0);
 }
