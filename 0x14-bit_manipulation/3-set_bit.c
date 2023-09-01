@@ -1,13 +1,14 @@
 #include "main.h"
 
 /**
- * _set_bit - sets the value of a bit to 1.
+ * set_bit - sets the value of a bit to 1.
+ * at a given index.
  * @p: pointer of an unsigned long int.
  * @index: index of the bit.
  *
  * Return: 1 if it worked, -1 if it didn't.
  */
-int _set_bit(unsigned long int *p, unsigned int index)
+int set_bit(unsigned long int *p, unsigned int index)
 {
 	unsigned int a;
 

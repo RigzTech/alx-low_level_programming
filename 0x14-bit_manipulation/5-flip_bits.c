@@ -12,7 +12,7 @@ unsigned int flip_bits(unsigned long int p, unsigned long int a)
 {
 	unsigned int nbts;
 
-	for (nbits = 0; p || a; p >>= 1, a >>= 1)
+	for (nbts = 0; p || a; p >>= 1, a >>= 1)
 	{
 		if ((p & 1) != (a & 1))
 			nbts++;
